@@ -12,6 +12,15 @@ resource "google_container_cluster" "primary" {
     istio_config {
       disabled = false
     }
+
+    dns_cache_config {
+      enabled = true
+    }
+  }
+
+  cluster_autoscaling {
+    enabled             = false
+    autoscaling_profile = "OPTIMIZE_UTILIZATION"
   }
 
   release_channel {
@@ -24,7 +33,18 @@ resource "google_container_cluster" "primary" {
   }
 
   workload_identity_config {
-    identity_namespace = "${var.google_project}.svc.id.goog"
+    workload_pool = "${var.google_project}.svc.id.goog"
+  }
+
+  # private_cluster_config {
+  #   enable_private_nodes    = true
+  #   enable_private_endpoint = false
+  # }
+
+  enable_shielded_nodes       = true
+  enable_intranode_visibility = false
+  pod_security_policy_config {
+    enabled = false
   }
 
 }
@@ -38,6 +58,11 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   cluster            = google_container_cluster.primary.name
   initial_node_count = 1
 
+  management {
+    auto_repair  = true
+    auto_upgrade = true
+  }
+
   autoscaling {
     min_node_count = 1
     max_node_count = 3
@@ -45,6 +70,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 
   node_config {
     preemptible  = true
+    spot         = true
     machine_type = "e2-standard-2"
 
     metadata = {
@@ -52,7 +78,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     }
 
     workload_metadata_config {
-      node_metadata = "GKE_METADATA_SERVER"
+      mode = "GKE_METADATA"
     }
 
     oauth_scopes = [

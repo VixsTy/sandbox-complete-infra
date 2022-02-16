@@ -25,7 +25,7 @@ Before starting, you will need to following [pre-requisite](infra/README.md#pre-
 * [ ] Deploy [ArgoCD](https://argoproj.github.io/argo-cd/), with static configuration
 * [ ] Ingress / Mesh : [Traefik](https://traefik.io/), [Istio](https://istio.io/), [Contour](https://projectcontour.io/)
 * [ ] [CertManager](https://cert-manager.io/) & [external-dns](https://github.com/kubernetes-sigs/external-dns)
-* [ ] Demo APP Stateless [Hipster shop](https://github.com/GoogleCloudPlatform/microservices-demo)
+* [ ] Demo APP Stateless [Docker wordsmith](https://github.com/dockersamples/k8s-wordsmith-demo.git), [Hipster shop](https://github.com/GoogleCloudPlatform/microservices-demo)
 * [ ] Monitoring 1 : [Prom](https://prometheus.io/) +  [Grafana](https://grafana.com/) + [Jaeger](https://www.jaegertracing.io/)
 * [ ] Monitoring 2 : [Beat agents](https://www.elastic.co/fr/beats/) + [Metrics](https://www.elastic.co/fr/infrastructure-monitoring) More : [Kubernetes monitoring](https://www.elastic.co/fr/what-is/kubernetes-monitoring)
 * [ ] [Chaos Mesh](https://chaos-mesh.org/)
